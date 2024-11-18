@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.map.model.mapper.MapMapper">
+    <resultMap id="SidoCodeResultMap" type="SidoCodeDto">
+        <result column="sido_code" property="sidoCode"/>
+        <result column="sido_name" property="sidoName"/>
+    </resultMap>
+
+    <select id="getSido" resultMap="SidoCodeResultMap">
+        select sido_code, sido_name
+        from sidos
+        order by no
+    </select>
+
+</mapper>
