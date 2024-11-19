@@ -1,6 +1,7 @@
 package com.ssafy.map.controller;
 
 import com.ssafy.map.model.SidoCodeDto;
+import com.ssafy.map.model.ThemeDto;
 import com.ssafy.map.model.service.MapService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,5 +34,11 @@ public class MapController {
 		return new ResponseEntity<List<SidoCodeDto>>(mapService.getSido(), HttpStatus.OK);
 	}
 
-	
+	@Operation(summary = "테마 정보", description = "테마의 종류를 반환한다.")
+	@GetMapping("/theme")
+	public ResponseEntity<List<ThemeDto>> theme() throws Exception {
+		log.info("theme - 호출");
+		return new ResponseEntity<List<ThemeDto>>(mapService.getTheme(), HttpStatus.OK);
+	}
+
 }

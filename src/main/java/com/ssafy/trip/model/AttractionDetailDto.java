@@ -1,4 +1,4 @@
-package com.ssafy.trip.attraction.model;
+package com.ssafy.trip.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
