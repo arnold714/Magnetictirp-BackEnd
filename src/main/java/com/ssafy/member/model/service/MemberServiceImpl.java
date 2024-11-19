@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+
 import com.ssafy.member.model.MemberDto;
 import com.ssafy.member.model.mapper.MemberMapper;
 
@@ -23,9 +24,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int idCheck(String userId) throws Exception {
+	public int emailCheck(String email) throws Exception {
 //		return sqlSession.getMapper(MemberMapper.class).idCheck(userId);
-		return memberMapper.idCheck(userId);
+		return memberMapper.emailCheck(email);
 	}
 
 	@Override
@@ -35,9 +36,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberDto loginMember(Map<String, String> map) throws Exception {
+	public MemberDto loginMember(MemberDto memberDto) throws Exception {
 //		return sqlSession.getMapper(MemberMapper.class).loginMember(map);
-		return memberMapper.loginMember(map);
+		return memberMapper.loginMember(memberDto);
 	}
 	
 	/* ADMIN */
