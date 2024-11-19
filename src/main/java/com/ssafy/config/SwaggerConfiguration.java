@@ -47,4 +47,9 @@ public class SwaggerConfiguration {
 	public GroupedOpenApi googleApi() {
 		return GroupedOpenApi.builder().group("ssafy-googleoauth").pathsToMatch("/google/**").build();
 	}
+	
+	@Bean
+	public GroupedOpenApi noticesApi() {
+		return GroupedOpenApi.builder().group("ssafy-notices").pathsToMatch("/notices/**").build();
+	}
 }
