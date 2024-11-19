@@ -63,9 +63,11 @@ public class AttractionServiceImpl implements AttractionService{
 			return dto;
 		}).collect(Collectors.toList());
 
-		int totalArticleCount = attractionMapper.getTotalAttractionCount(param);
-		log.info("listAttraction totalArticleCount - {}", totalArticleCount);
-		int totalPageCount = (totalArticleCount - 1) / sizePerPage + 1;
+		int totalAttractionCount = attractionMapper.getTotalAttractionCount(param);
+		log.info("listAttraction totalArticleCount - {}", totalAttractionCount);
+		int totalPageCount = (totalAttractionCount - 1) / sizePerPage + 1;
+		log.info("listAttraction totalPageCount - {}", totalPageCount);
+		
 
 		AttractionListDto attractionListDto = new AttractionListDto();
 		attractionListDto.setAttractions(attractionRequestDtos);
