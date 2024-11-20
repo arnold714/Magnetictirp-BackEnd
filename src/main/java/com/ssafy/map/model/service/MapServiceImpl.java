@@ -1,6 +1,7 @@
 package com.ssafy.map.model.service;
 
 import com.ssafy.map.model.SidoCodeDto;
+import com.ssafy.map.model.ThemeDto;
 import com.ssafy.map.model.mapper.MapMapper;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,11 @@ public class MapServiceImpl implements MapService {
 	@Override
 	public List<SidoCodeDto> getSido() throws Exception {
 		return mapMapper.getSido();
+	}
+
+	@Override
+	public List<ThemeDto> getTheme() throws Exception {
+		return mapMapper.getTheme();
 	}
 
 
