@@ -4,13 +4,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+
 import com.ssafy.member.model.MemberDto;
 
 public interface MemberService {
 
-	int idCheck(String userId) throws Exception;
+	int emailCheck(String email) throws Exception;
 	void joinMember(MemberDto memberDto) throws Exception;
-	MemberDto loginMember(Map<String, String> map) throws Exception;
+	MemberDto loginMember(MemberDto memberDto) throws Exception;
 	
 	/* Admin */
 	List<MemberDto> listMember(Map<String, Object> map) throws Exception;
