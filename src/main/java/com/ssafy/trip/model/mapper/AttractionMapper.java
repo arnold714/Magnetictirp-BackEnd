@@ -17,5 +17,5 @@ public interface AttractionMapper {
 	String getSidoName(@Param("sidoCode") int sidoCode) throws SQLException;
 	String getGugunName(@Param("sidoCode") int sidoCode, @Param("gugunCode") int gugunCode) throws SQLException;
 	String getContentTypeName(@Param("contentTypeId") int contentTypeId) throws SQLException;
-
+	String getContentTypeId(int contentId)throws SQLException;
 }
