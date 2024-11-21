@@ -73,4 +73,10 @@ public class AttractionServiceImpl implements AttractionService{
 		attractionListDto.setTotalPageCount(totalPageCount);
 		return attractionListDto;
 	}
+
+	@Override
+	public String getContentTypeId(int contentId) throws Exception {
+		// TODO Auto-generated method stub
+		return attractionMapper.getContentTypeId(contentId);
+	}
 }

@@ -71,5 +71,8 @@
     <select id="getContentTypeName" parameterType="int" resultType="String">
         SELECT content_type_name FROM contenttypes WHERE content_type_id = #{contentTypeId}
     </select>
-
+	<!--콘텐츠 타입 ID 조회  -->
+	<select id="getContentTypeId" parameterType="int" resultType="String">
+        SELECT content_type_id FROM attractions WHERE content_id = #{contentId}
+    </select>
 </mapper>
