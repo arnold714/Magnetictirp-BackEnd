@@ -42,5 +42,20 @@
         SELECT gugun_name FROM guguns WHERE sido_code = #{sidoCode} AND gugun_code = #{gugunCode}
     </select>
 
-
+    <insert id="createPlan" parameterType="com.ssafy.plan.model.PlanCreateDto" useGeneratedKeys="true" keyProperty="planId">
+        INSERT INTO plans (title, trip_day, area_code, si_gun_gu_code)
+        VALUES (#{title}, #{duration}, #{areaCode}, #{sigunguCode})
+    </insert>
+    <select id="getPlan" parameterType="int" resultMap="planResult">
+        SELECT
+            plan_id,
+            title,
+            is_public,
+            trip_day,
+            area_code,
+            si_gun_gu_code,
+            created_at
+        FROM plans
+        WHERE plan_id = #{planId}
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.ssafy.plan.model.service;
 
+import com.ssafy.plan.model.PlanCreateDto;
 import com.ssafy.plan.model.PlanListDto;
 import com.ssafy.plan.model.PlanRequestDto;
 import com.ssafy.plan.model.PlanResponseDto;
@@ -19,6 +20,51 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PlanServiceImpl implements PlanService {
     private final PlanMapper planMapper;
+
+    @Override
+    public PlanRequestDto getPlan(int planId) throws Exception {
+        PlanResponseDto plan = planMapper.getPlan(planId);
+        if (plan == null) {
+            return null;
+        }
+
+        PlanRequestDto dto = new PlanRequestDto();
+        dto.setPlanId(plan.getPlanId());
+        dto.setTitle(plan.getTitle());
+        dto.setIsPublic(plan.getIsPublic());
+
+        // Convert tripDay to string
+        if (plan.getTripDay() > 0 && plan.getTripDay() <= 3) {
+            String tripDayFormatted;
+            switch (plan.getTripDay()) {
+                case 3:
+                    tripDayFormatted = "2박 3일";
+                    break;
+                case 2:
+                    tripDayFormatted = "1박 2일";
+                    break;
+                case 1:
+                default:
+                    tripDayFormatted = "당일치기";
+                    break;
+            }
+            dto.setTripDay(tripDayFormatted);
+        }
+
+        dto.setAreaCode(plan.getAreaCode());
+        dto.setSiGunGuCode(plan.getSiGunGuCode());
+
+        if (plan.getCreatedAt() != null) {
+            String formattedDate = plan.getCreatedAt().toLocalDate().toString().replace("-", ".");
+            dto.setCreatedAt(formattedDate);
+        }
+
+        // Set sidoName and gugunName
+        dto.setSidoName(planMapper.getSidoName(plan.getAreaCode()));
+        dto.setGugunName(planMapper.getGugunName(plan.getAreaCode(), plan.getSiGunGuCode()));
+
+        return dto;
+    }
 
     @Override
     public PlanListDto listPlan(Map<String, String> map) throws Exception {
@@ -79,5 +125,34 @@ public class PlanServiceImpl implements PlanService {
         planListDto.setCurrentPage(currentPage);
         planListDto.setTotalPageCount(totalPageCount);
         return planListDto;
+    }
+
+    @Override
+    public int createPlan(PlanCreateDto planCreateDto) throws Exception {
+        String sidoName = planMapper.getSidoName(planCreateDto.getAreaCode());
+        String title = sidoName;
+        if (planCreateDto.getSigunguCode() != null) {
+            String gugunName = planMapper.getGugunName(planCreateDto.getAreaCode(), planCreateDto.getSigunguCode());
+            title += " " + gugunName;
+        }
+
+        String durationText;
+        switch (planCreateDto.getDuration()) {
+            case 3:
+                durationText = "2박 3일";
+                break;
+            case 2:
+                durationText = "1박 2일";
+                break;
+            case 1:
+            default:
+                durationText = "당일치기";
+                break;
+        }
+
+        title += " " + durationText + " 여행";
+        planCreateDto.setTitle(title);
+        planMapper.createPlan(planCreateDto);
+        return planCreateDto.getPlanId();
     }
 }

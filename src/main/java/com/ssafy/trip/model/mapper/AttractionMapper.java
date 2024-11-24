@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import com.ssafy.plan.model.PlanResponseDto;
 import com.ssafy.trip.model.AttractionDetailDto;
 import com.ssafy.trip.model.AttractionResponseDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,4 +19,6 @@ public interface AttractionMapper {
 	String getGugunName(@Param("sidoCode") int sidoCode, @Param("gugunCode") int gugunCode) throws SQLException;
 	String getContentTypeName(@Param("contentTypeId") int contentTypeId) throws SQLException;
 	String getContentTypeId(int contentId)throws SQLException;
+	List<AttractionResponseDto> searchList(Map<String, Object> param) throws SQLException;
+
 }

@@ -24,6 +24,47 @@ public class AttractionServiceImpl implements AttractionService{
 	private final AttractionMapper attractionMapper;
 
 	@Override
+	public AttractionListDto searchList(Map<String, String> params) throws Exception {
+		Map<String, Object> param = new HashMap<>();
+		param.put("query", params.get("query"));
+		param.put("category", params.get("category"));
+		param.put("sidoCode", params.get("sidoCode"));
+		param.put("gugunCode", params.get("gugunCode"));
+		int currentPage = Integer.parseInt(params.get("page") == null ? "1" : params.get("page"));
+		int sizePerPage = Integer.parseInt(params.get("size") == null ? "20" : params.get("size"));
+		int start = currentPage * sizePerPage - sizePerPage;
+		param.put("start", start);
+		param.put("size", sizePerPage);
+		List<AttractionResponseDto> list = attractionMapper.searchList(param);
+
+		List<AttractionRequestDto> attractionRequestDtos = list.stream().map(attraction -> {
+			AttractionRequestDto dto = new AttractionRequestDto();
+			dto.setContentId(attraction.getContentId());
+			dto.setContentTypeId(attraction.getContentTypeId());
+			dto.setTitle(attraction.getTitle());
+			dto.setAddr1(attraction.getAddr1());
+			dto.setAddr2(attraction.getAddr2());
+			dto.setFirstImage1(attraction.getFirstImage1());
+			dto.setFirstImage2(attraction.getFirstImage2());
+			dto.setAreaCode(attraction.getAreaCode());
+			dto.setSiGunGuCode(attraction.getSiGunGuCode());
+			dto.setLatitude(attraction.getLatitude());
+			dto.setLongitude(attraction.getLongitude());
+			try {
+				dto.setSidoName(attractionMapper.getSidoName(attraction.getAreaCode()));
+				dto.setGugunName(attractionMapper.getGugunName(attraction.getAreaCode(), attraction.getSiGunGuCode()));
+				dto.setContentTypeName(attractionMapper.getContentTypeName(attraction.getContentTypeId()));
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+			return dto;
+		}).collect(Collectors.toList());
+
+		AttractionListDto attractionListDto = new AttractionListDto();
+		attractionListDto.setAttractions(attractionRequestDtos);
+		return attractionListDto;
+	}
+	@Override
 	public AttractionListDto listAttraction(Map<String, String> map) throws Exception {
 		Map<String, Object> param = new HashMap<>();
 		param.put("word", map.get("word") == null ? "" : map.get("word"));
