@@ -11,20 +11,21 @@
 		<result column="user_name" property="userName"/>
 		<result column="email" property="email"/>
 		<result column="content" property="content"/>
+		<result column="picture" property="picture"/>
 		<result column="created_date" property="createdDate"/>
 		<result column="updated_date" property="updatedDate"/>
 	</resultMap>
 	
 	<insert id="writeComment" parameterType="commentDto">
-		insert into notices (content_id, user_name, email, content,created_date)
-		values (#{contentId}, #{user_name}, #{email}, #{content}, now())
+		insert into comments (content_id, user_name, email, content,picture,created_date)
+		values (#{contentId}, #{userName}, #{email}, #{content},#{picture}, now())
 		<!-- <selectKey resultType="int" keyProperty="noticesNo" order="AFTER">
 			select last_insert_id()
 		</selectKey> -->
 	</insert>
 
 	<select id="getListComment" parameterType="int" resultMap="comment">
-		select user_name,email,content,created_date,updated_date
+		select user_name,email,content,picture,created_date,updated_date
 		from comments 
 		where content_id = #{contentId};
 		

@@ -19,6 +19,7 @@ public class CommentDto {
     private String userName;
     private String email;
     private String content;
+    private String picture;
     private String createdDate;
     private String updatedDate;
 }
