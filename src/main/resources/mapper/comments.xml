@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.comment.model.mapper.CommentMapper">
+	
+	<!-- type = noticesDto ,  id= notices  -->
+	<resultMap type="commentDto" id="comment">
+		<result column="comment_no" property="commentNo"/>
+		<result column="content_id" property="contentId"/>
+		<result column="user_name" property="userName"/>
+		<result column="email" property="email"/>
+		<result column="content" property="content"/>
+		<result column="created_date" property="createdDate"/>
+		<result column="updated_date" property="updatedDate"/>
+	</resultMap>
+	
+	<insert id="writeComment" parameterType="commentDto">
+		insert into notices (content_id, user_name, email, content,created_date)
+		values (#{contentId}, #{user_name}, #{email}, #{content}, now())
+		<!-- <selectKey resultType="int" keyProperty="noticesNo" order="AFTER">
+			select last_insert_id()
+		</selectKey> -->
+	</insert>
+
+	<select id="getListComment" parameterType="int" resultMap="comment">
+		select user_name,email,content,created_date,updated_date
+		from comments 
+		where content_id = #{contentId};
+		
+	</select>
+	
+	
+	<!-- <select id="getComment" parameterType="int" resultMap="viewArticle">
+		select b.notices_no, b.admin_id, b.subject, b.content, b.content_type, b.register_time, m.user_name 
+		from notices b, users m
+		where b.admin_id = m.user_id
+		and b.notices_no = #{noticesNo}
+	</select>
+	 -->
+	
+	
+	<update id="modifyComment" parameterType="commentDto">
+		update comments
+		set content = #{content}, updated_date = #{now()}
+		where contend_id  = #{content_id} and email = #{email}
+	</update>
+	
+	
+	<delete id="deleteComment" parameterType="map">
+		delete from comments
+		where content_id = #{contentId} and email = #{email}
+	</delete>
+
+</mapper>
