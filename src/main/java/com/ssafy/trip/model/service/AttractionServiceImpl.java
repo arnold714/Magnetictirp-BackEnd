@@ -64,6 +64,39 @@ public class AttractionServiceImpl implements AttractionService{
 		attractionListDto.setAttractions(attractionRequestDtos);
 		return attractionListDto;
 	}
+
+	@Override
+	public AttractionListDto favoriteList() throws Exception {
+		List<AttractionResponseDto> list = attractionMapper.favoriteList();
+		log.info("favoriteList list - {}", list);
+		List<AttractionRequestDto> attractionRequestDtos = list.stream().map(attraction -> {
+			AttractionRequestDto dto = new AttractionRequestDto();
+			dto.setContentId(attraction.getContentId());
+			dto.setContentTypeId(attraction.getContentTypeId());
+			dto.setTitle(attraction.getTitle());
+			dto.setAddr1(attraction.getAddr1());
+			dto.setAddr2(attraction.getAddr2());
+			dto.setFirstImage1(attraction.getFirstImage1());
+			dto.setFirstImage2(attraction.getFirstImage2());
+			dto.setAreaCode(attraction.getAreaCode());
+			dto.setSiGunGuCode(attraction.getSiGunGuCode());
+			dto.setLatitude(attraction.getLatitude());
+			dto.setLongitude(attraction.getLongitude());
+			try {
+				dto.setSidoName(attractionMapper.getSidoName(attraction.getAreaCode()));
+				dto.setGugunName(attractionMapper.getGugunName(attraction.getAreaCode(), attraction.getSiGunGuCode()));
+				dto.setContentTypeName(attractionMapper.getContentTypeName(attraction.getContentTypeId()));
+
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+			return dto;
+		}).collect(Collectors.toList());
+		AttractionListDto attractionListDto = new AttractionListDto();
+		attractionListDto.setAttractions(attractionRequestDtos);
+		return attractionListDto;
+	}
+
 	@Override
 	public AttractionListDto listAttraction(Map<String, String> map) throws Exception {
 		Map<String, Object> param = new HashMap<>();

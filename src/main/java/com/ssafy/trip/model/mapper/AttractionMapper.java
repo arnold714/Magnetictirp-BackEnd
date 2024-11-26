@@ -20,5 +20,5 @@ public interface AttractionMapper {
 	String getContentTypeName(@Param("contentTypeId") int contentTypeId) throws SQLException;
 	String getContentTypeId(int contentId)throws SQLException;
 	List<AttractionResponseDto> searchList(Map<String, Object> param) throws SQLException;
-
+	List<AttractionResponseDto> favoriteList() throws SQLException;
 }

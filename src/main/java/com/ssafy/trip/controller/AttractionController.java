@@ -68,4 +68,18 @@ public class AttractionController {
             return ResponseEntity.status(500).body(Map.of("message", "서버 오류 발생"));
         }
     }
+    @Operation(summary = "관광지 목록 조회", description = "쿼리 매개변수를 사용하여 관광지 목록을 필터링하여 조회합니다.")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "관광지 목록 검색 성공"),
+            @ApiResponse(responseCode = "404", description = "관광지 목록을 찾을 수 없음"),
+            @ApiResponse(responseCode = "500", description = "서버 오류 발생") })
+    @GetMapping("/favorite")
+    public ResponseEntity<?> favoriteList() {
+        try {
+            AttractionListDto list = attractionService.favoriteList();
+            log.info("favoriteList list - {}", list);
+            return ResponseEntity.ok().body(list);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("message", "서버 오류 발생"));
+        }
+    }
 }
