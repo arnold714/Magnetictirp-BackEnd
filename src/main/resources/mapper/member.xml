@@ -31,7 +31,7 @@
     </select>
     
     <select id="listMember" resultMap="member">
-        select user_name, user_id, password, email, join_date
+        select user_name, user_id,  email, join_date, picture
         from users
         order by join_date
     </select>

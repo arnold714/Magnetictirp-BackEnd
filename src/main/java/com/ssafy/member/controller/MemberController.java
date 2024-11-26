@@ -255,7 +255,16 @@ public class MemberController {
     public ResponseEntity<String> list() {
         return ResponseEntity.ok("redirect:/assets/list.html");
     }
-    
+
+    @GetMapping("/all")
+    public ResponseEntity<?> listMember() {
+        try {
+            return ResponseEntity.ok().body(memberService.listMember(null));
+        } catch (Exception e) {
+            log.error("회원 목록 조회 중 오류 발생", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 목록 조회 중 문제 발생!");
+        }
+    }
   
     
 }
