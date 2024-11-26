@@ -79,6 +79,22 @@ public class CommentController {
 	}
 
 
+	@GetMapping("/{email}")
+	public ResponseEntity<?> userComment(
+	    @PathVariable("email") @Parameter(description = "공지사항을 얻기 위한 contentId.", required = true) String email) {
+	    log.info("getListComment contentId - {}", email);
+	    try {
+	        List<CommentDto> commentList = commentService.userComment(email);
+	        for(CommentDto comm : commentList) {
+	        	log.info(comm.toString());
+	        }
+	        HttpHeaders header = new HttpHeaders();
+	        header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+	        return ResponseEntity.ok().headers(header).body(commentList);
+	    } catch (Exception e) {
+	        return exceptionHandling(e);
+	    }
+	}
 //	@Operation(summary = "댓글 게시판 글작성", description = "")
 //	@GetMapping("/{noticesNo}")
 //	public ResponseEntity<NoticesDto> getArticle(

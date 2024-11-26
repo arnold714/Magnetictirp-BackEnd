@@ -31,6 +31,11 @@
 		order by updated_date desc 
 	</select>
 	
+	<select id="userComment" parameterType="int" resultMap="comment">
+		select content_id,user_name,email,content,picture,created_date,updated_date
+		from comments 
+		where email = #{email}
+	</select>
 	
 	<!-- <select id="getComment" parameterType="int" resultMap="viewArticle">
 		select b.notices_no, b.admin_id, b.subject, b.content, b.content_type, b.register_time, m.user_name 
