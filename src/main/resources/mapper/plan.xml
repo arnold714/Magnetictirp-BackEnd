@@ -7,6 +7,7 @@
     <resultMap type="com.ssafy.plan.model.PlanResponseDto" id="planResult">
         <result column="plan_id" property="planId"/>
         <result column="title" property="title"/>
+        <result column="image" property="image"/>
         <result column="is_public" property="isPublic"/>
         <result column="trip_day" property="tripDay"/>
         <result column="area_code" property="areaCode"/>
@@ -18,6 +19,7 @@
         SELECT
         plan_id,
         title,
+        image,
         is_public,
         trip_day,
         area_code,
@@ -27,6 +29,11 @@
         ORDER BY created_at DESC
         LIMIT #{start}, #{size}
     </select>
+
+    <insert id="inviteMember" parameterType="map">
+        INSERT INTO plan_member (plan_id, user_id)
+        VALUES (#{planId}, #{email})
+    </insert>
 
     <select id="getTotalAttractionCount" resultType="int">
         select count(plan_id)

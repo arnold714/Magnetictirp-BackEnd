@@ -1,9 +1,6 @@
 package com.ssafy.plan.model.service;
 
-import com.ssafy.plan.model.PlanCreateDto;
-import com.ssafy.plan.model.PlanListDto;
-import com.ssafy.plan.model.PlanRequestDto;
-import com.ssafy.plan.model.PlanResponseDto;
+import com.ssafy.plan.model.*;
 import com.ssafy.plan.model.mapper.PlanMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -83,6 +80,7 @@ public class PlanServiceImpl implements PlanService {
             PlanRequestDto dto = new PlanRequestDto();
             dto.setPlanId(plan.getPlanId());
             dto.setTitle(plan.getTitle());
+            dto.setImage(plan.getImage());
             dto.setIsPublic(plan.getIsPublic());
             // tripDay를 문자열로 변환하여 저장
             if (plan.getTripDay()>0 && plan.getTripDay()<=3) {

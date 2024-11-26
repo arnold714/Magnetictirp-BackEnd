@@ -14,6 +14,8 @@ public class PlanRequestDto {
     private int planId;
     @Schema(description = "제목", example = "ssafy 친구들과 대만여행")
     private String title;
+    @Schema(description = "이미지", example = "http://tong.visitkorea.or.kr/cms/resource/43/2766743_image2_1.jpg")
+    private String image;
     @Schema(description = "공개여부", example = "1")
     private int isPublic;
     @Schema(description = "여행 일수", example = "2박3일")
