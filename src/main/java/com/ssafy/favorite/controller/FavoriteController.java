@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,41 +39,40 @@ public class FavoriteController {
 	}
 
 	
-	@GetMapping
+	@PostMapping("/register")
 	public ResponseEntity<?> registerFavorite(
-			@RequestBody @Parameter(description = "작성글 정보.", required = true) FavoriteDto favoriteDto) {
-		log.info("writeComment commentDto - {}", favoriteDto);
-		try {
-			favoriteService.registerFavorite(favoriteDto);
-
-			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		} catch (Exception e) {
-			return exceptionHandling(e);
-		}
+	        @RequestBody @Parameter(description = "좋아요 등록 정보", required = true) FavoriteDto favoriteDto) {
+	    log.info("registerFavorite favoriteDto - {}", favoriteDto);
+	    try {
+	        favoriteService.registerFavorite(favoriteDto);
+	        return new ResponseEntity<Void>(HttpStatus.CREATED);
+	    } catch (Exception e) {
+	        return exceptionHandling(e);
+	    }
 	}
-	
-	@PostMapping
+
+	@DeleteMapping("/delete")
 	public ResponseEntity<?> deleteFavorite(
-			@RequestBody @Parameter(description = "작성글 정보.", required = true) FavoriteDto favoriteDto) {
-		log.info("writeComment commentDto - {}", favoriteDto);
-		try {
-			favoriteService.deleteFavorite(favoriteDto);
-
-			return new ResponseEntity<Void>(HttpStatus.CREATED);
-		} catch (Exception e) {
-			return exceptionHandling(e);
-		}
+	        @RequestBody @Parameter(description = "좋아요 삭제 정보", required = true) FavoriteDto favoriteDto) {
+	    log.info("deleteFavorite favoriteDto - {}", favoriteDto);
+	    try {
+	        favoriteService.deleteFavorite(favoriteDto);
+	        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	    } catch (Exception e) {
+	        return exceptionHandling(e);
+	    }
 	}
+
 	
 	@GetMapping("/{email}")
 	public ResponseEntity<?> getListComment(
 	    @PathVariable("email") @Parameter(description = "공지사항을 얻기 위한 contentId.", required = true) String email) {
 	    log.info("getListComment contentId - {}", email);
+	    log.info(email);
 	    try {
 	        List<FavoriteDto> favoriteList = favoriteService.listFavorite(email);
-	        for(FavoriteDto comm : favoriteList) {
-	        	log.info(comm.toString());
-	        }
+	     
+	       
 	        HttpHeaders header = new HttpHeaders();
 	        header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 	        return ResponseEntity.ok().headers(header).body(favoriteList);

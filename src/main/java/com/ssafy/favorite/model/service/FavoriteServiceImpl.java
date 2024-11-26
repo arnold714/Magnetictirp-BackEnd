@@ -20,13 +20,15 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Override
 	public void registerFavorite(FavoriteDto fav) throws Exception {
 		favoriteMapper.registerFavorite(fav);
+		favoriteMapper.incrementFavoriteHit(fav.getContentId());
 		
 	}
 
 	@Override
 	public void deleteFavorite(FavoriteDto fav) throws Exception {
 		// TODO Auto-generated method stub
-		favoriteMapper.deleteFavorite(fav);
+		 favoriteMapper.decrementFavoriteHit(fav.getContentId());
+		 favoriteMapper.deleteFavorite(fav);
 	}
 
 	@Override

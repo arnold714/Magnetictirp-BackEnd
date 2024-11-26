@@ -1,4 +1,4 @@
-package com.ssafy.favorite.model;
+package com.ssafy.favoritehit.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +9,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class FavoriteDto {
+public class FavoriteHitDto {
 	private int contentId;
-	private String email;
-	private int favoNo;
+	private int hit;
 }

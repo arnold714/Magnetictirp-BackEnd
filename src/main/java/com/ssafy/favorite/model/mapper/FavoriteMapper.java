@@ -12,5 +12,7 @@ public interface FavoriteMapper {
 	
 	void registerFavorite(FavoriteDto fav) throws SQLException;
 	void deleteFavorite(FavoriteDto fav) throws SQLException;
+	void decrementFavoriteHit(int contentId) throws SQLException;
 	List<FavoriteDto> listFavorite(String email) throws SQLException;
+	void incrementFavoriteHit(int contentId) throws SQLException;
 }
