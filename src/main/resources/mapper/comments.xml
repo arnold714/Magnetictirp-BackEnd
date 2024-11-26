@@ -27,8 +27,8 @@
 	<select id="getListComment" parameterType="int" resultMap="comment">
 		select user_name,email,content,picture,created_date,updated_date
 		from comments 
-		where content_id = #{contentId};
-		
+		where content_id = #{contentId}
+		order by updated_date desc 
 	</select>
 	
 	
