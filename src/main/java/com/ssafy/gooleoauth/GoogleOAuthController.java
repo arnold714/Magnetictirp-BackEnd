@@ -64,7 +64,7 @@ public class GoogleOAuthController {
     @Operation(summary = "구글 oauth 이동", description = "구글 계정 확인으로 이동합니다")
     @GetMapping(value = "/login/getGoogleAuthUrl")
     public ResponseEntity<?> getGoogleAuthUrl(HttpServletRequest request) throws Exception {
-    	
+    	log.info("도착");
         String reqUrl = googleLoginUrl + "/o/oauth2/v2/auth?client_id=" + googleClientId + "&redirect_uri=" + googleRedirectUrl
                 + "&response_type=code&scope=email%20profile%20openid&access_type=offline";
 
