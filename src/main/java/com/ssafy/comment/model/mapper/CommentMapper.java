@@ -26,6 +26,6 @@ public interface CommentMapper {
 	
 	void deleteComment(Map<String,String> param) throws SQLException;
 
-	List<CommentDto> userComment(String email)throws SQLException;
+	
 	
 }

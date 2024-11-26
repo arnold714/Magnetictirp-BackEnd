@@ -20,7 +20,7 @@ public interface CommentService {
 
 	void modifyComment(CommentDto commentDto) throws Exception;
 
-	List<CommentDto> userComment(String email)throws Exception;
+	
 	void deleteComment(Map<String,String> param) throws Exception;
 
 }

@@ -48,10 +48,6 @@ public class CommentServiceImpl implements CommentService{
 		// TODO Auto-generated method stub
 		return commentMapper.getListComment(commentId);
 	}
-	@Override
-	public List<CommentDto> userComment(String email) throws Exception {
-		// TODO Auto-generated method stub
-		return commentMapper.userComment(email);
-	}
+	
 
 }
