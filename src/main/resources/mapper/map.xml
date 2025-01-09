@@ -7,11 +7,21 @@
         <result column="sido_code" property="sidoCode"/>
         <result column="sido_name" property="sidoName"/>
     </resultMap>
+    <resultMap id="ThemeResultMap" type="ThemeDto">
+        <result column="content_type_id" property="themeId"/>
+        <result column="content_type_name" property="themeName"/>
+    </resultMap>
 
     <select id="getSido" resultMap="SidoCodeResultMap">
         select sido_code, sido_name
         from sidos
         order by no
+    </select>
+
+    <select id="getTheme" resultMap="ThemeResultMap">
+        select content_type_id, content_type_name
+        from contenttypes
+        order by content_type_id
     </select>
 
 </mapper>

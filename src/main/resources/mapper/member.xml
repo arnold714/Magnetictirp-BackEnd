@@ -5,33 +5,33 @@
 <mapper namespace="com.ssafy.member.model.mapper.MemberMapper">
 
     <resultMap type="com.ssafy.member.model.MemberDto" id="member">
-        <result column="user_id" property="userId"/>
-        <result column="user_name" property="userName"/>
-        <result column="password" property="password"/>
+        <result column="user_id" property="sub"/>
+        <result column="user_name" property="name"/>
+        <result column="picture" property="picture"/>
         <result column="email" property="email"/>
         <result column="role" property="role"/>
         <result column="join_date" property="joinDate"/>
     </resultMap>
-    
-    <select id="idCheck" parameterType="String" resultType="int">
-        select count(user_id)
+   
+    <select id="emailCheck" parameterType="String" resultType="int">
+        select count(email)
         from users
-        where user_id = #{userId}
+        where email = #{email}
     </select>
 
     <insert id="joinMember" parameterType="com.ssafy.member.model.MemberDto">
-        insert into users (user_id, user_name, password, email, join_date)
-        values (#{userId}, #{userName}, #{password}, #{email}, now())
+        insert into users (user_id, user_name, picture, email, join_date)
+        values (#{sub}, #{name}, #{picture}, #{email}, now())
     </insert>
 
-    <select id="loginMember" parameterType="map" resultMap="member">
-        select user_id, user_name
+    <select id="loginMember" parameterType="com.ssafy.member.model.MemberDto" resultMap="member">
+        select user_name,picture,email,role
         from users
-        where user_id = #{userid} and password = #{password}
+        where user_id = #{sub} and email = #{email}
     </select>
     
     <select id="listMember" resultMap="member">
-        select user_name, user_id, password, email, join_date
+        select user_name, user_id,  email, join_date, picture
         from users
         order by join_date
     </select>

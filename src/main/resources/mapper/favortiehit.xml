@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.favoritehit.model.mapper.FavoriteHitMapper">
+	
+   <select id="getFavoriteHit" resultType="int">
+    SELECT 
+        IFNULL(hit, 0) AS hit
+    FROM favorite_hit
+    WHERE content_id = #{contentId}
+    UNION ALL
+    SELECT 0 WHERE NOT EXISTS (
+        SELECT 1 
+        FROM favorite_hit
+        WHERE content_id = #{contentId}
+    );
+</select>
+
+
+    <select id="getAllFavoriteHits" resultType="map">
+        SELECT fh.content_id, fh.hit
+        FROM favorite_hit fh
+        INNER JOIN favorites f ON fh.content_id = f.content_id;
+    </select>
+
+    <select id="getUserFavoriteHits" resultType="map">
+        SELECT f.email, f.content_id, fh.hit
+        FROM favorites f
+        INNER JOIN favorite_hit fh ON f.content_id = fh.content_id
+        WHERE f.email = #{email};
+    </select>
+
+	
+	<select id="getHitList" resultType="map">
+	    SELECT content_id, hit
+	    FROM favorite_hit
+	    ORDER BY hit DESC
+	    LIMIT 8;
+	</select>
+
+
+</mapper>

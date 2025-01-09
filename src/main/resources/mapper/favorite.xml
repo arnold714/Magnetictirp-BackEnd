@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.favorite.model.mapper.FavoriteMapper">
+	
+	<!-- type = noticesDto ,  id= notices  -->
+	<resultMap type="favoriteDto" id="favorite">
+		<result column="fav_no" property="favNo"/>
+		<result column="email" property="email"/>
+		<result column="content_id" property="contentId"/>
+	</resultMap>
+	
+	<insert id="registerFavorite">
+        INSERT INTO favorites (email, content_id)
+        VALUES (#{email}, #{contentId});
+
+    </insert>
+	<insert id="incrementFavoriteHit">
+    INSERT INTO favorite_hit (content_id, hit)
+    VALUES (#{contentId}, 1)
+    ON DUPLICATE KEY UPDATE hit = hit + 1;
+	</insert>
+	
+    <delete id="deleteFavorite">
+        DELETE FROM favorites
+        WHERE email = #{email} AND content_id = #{contentId};
+    </delete>
+    
+	<update id="decrementFavoriteHit">
+        UPDATE favorite_hit
+    SET hit = GREATEST(hit - 1, 0)
+    WHERE content_id = #{contentId};
+    </update>
+    
+    <select id="getFavoriteHit" resultType="int">
+        SELECT hit
+        FROM favorite_hit
+        WHERE content_id = #{contentId};
+    </select>
+
+    <select id="getAllFavoriteHits" resultType="map">
+        SELECT fh.content_id, fh.hit
+        FROM favorite_hit fh
+        INNER JOIN favorites f ON fh.content_id = f.content_id;
+    </select>
+
+    <select id="getUserFavoriteHits" resultType="map">
+        SELECT f.email, f.content_id, fh.hit
+        FROM favorites f
+        INNER JOIN favorite_hit fh ON f.content_id = fh.content_id
+        WHERE f.email = #{email};
+    </select>
+
+    <!-- listFavorite: 특정 email의 모든 content_id를 가져오기 -->
+    <select id="listFavorite"  resultMap="favorite">
+        SELECT content_id
+        FROM favorites
+        WHERE email = #{email};
+    </select>
+	
+	
+
+</mapper>
